@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 
 import sys
 
-sys.path.append('../../')
-sys.path.append('.')
+sys.path.append("../../")
+sys.path.append(".")
 
 from spotmicro.util.gui import GUI
 from spotmicro.GymEnvs.spot_bezier_env import spotBezierEnv
@@ -16,6 +16,7 @@ from spotmicro.OpenLoopSM.SpotOL import BezierStepper
 
 import time
 from ars_lib.ars import ARSAgent, Normalizer, Policy, ParallelWorker
+
 # Multiprocessing package for python
 # Parallelization improvements based on:
 # https://github.com/bulletphysics/bullet3/blob/master/examples/pybullet/gym/pybullet_envs/ARS/ars.py
@@ -53,19 +54,18 @@ def main():
     if not os.path.exists(models_path):
         os.makedirs(models_path)
 
-    env = spotBezierEnv(render=False,
-                        on_rack=False,
-                        height_field=True,
-                        draw_foot_path=False)
+    env = spotBezierEnv(
+        render=False, on_rack=False, height_field=True, draw_foot_path=False
+    )
 
     # Set seeds
     env.seed(seed)
     np.random.seed(seed)
 
     state_dim = env.observation_space.shape[0]
-    print("STATE DIM: {}".format(state_dim))
+    print(f"STATE DIM: {state_dim}")
     action_dim = env.action_space.shape[0]
-    print("ACTION DIM: {}".format(action_dim))
+    print(f"ACTION DIM: {action_dim}")
     max_action = float(env.action_space.high[0])
 
     env.reset()
@@ -87,8 +87,7 @@ def main():
     # Initialize Agent with normalizer, policy and gym env
     agent = ARSAgent(normalizer, policy, env, bz_step, bzg, spot)
     agent_num = 0
-    if os.path.exists(models_path + "/" + file_name + str(agent_num) +
-                      "_policy"):
+    if os.path.exists(models_path + "/" + file_name + str(agent_num) + "_policy"):
         print("Loading Existing agent")
         agent.load(models_path + "/" + file_name + str(agent_num))
 
@@ -113,8 +112,9 @@ def main():
     # Start multiprocessing
     # Start multiprocessing
     for proc_num in range(num_processes):
-        p = mp.Process(target=ParallelWorker,
-                       args=(childPipes[proc_num], env, state_dim))
+        p = mp.Process(
+            target=ParallelWorker, args=(childPipes[proc_num], env, state_dim)
+        )
         p.start()
         processes.append(p)
 
@@ -130,15 +130,14 @@ def main():
         # +1 to account for 0 indexing.
         # +0 on ep_timesteps since it will increment +1 even if done=True
         print(
-            "Total T: {} Episode Num: {} Episode T: {} Reward: {:.2f} REWARD PER STEP: {:.2f}"
-            .format(t + 1, episode_num, episode_timesteps, episode_reward,
-                    episode_reward / float(episode_timesteps)))
+            f"Total T: {t + 1} Episode Num: {episode_num} Episode T: {episode_timesteps} "
+            + f"Reward: {episode_reward:.2f} REWARD PER STEP: {episode_reward / float(episode_timesteps):.2f}"
+        )
 
         # Evaluate episode
         if (episode_num + 1) % eval_freq == 0:
             if save_model:
-                agent.save(models_path + "/" + str(file_name) +
-                           str(episode_num))
+                agent.save(models_path + "/" + str(file_name) + str(episode_num))
                 # replay_buffer.save(t)
 
         episode_num += 1
@@ -151,5 +150,5 @@ def main():
         p.join()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
