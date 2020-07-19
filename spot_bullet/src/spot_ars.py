@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import sys
 
 sys.path.append('../../')
+sys.path.append('.')
 
 from spotmicro.util.gui import GUI
 from spotmicro.GymEnvs.spot_bezier_env import spotBezierEnv

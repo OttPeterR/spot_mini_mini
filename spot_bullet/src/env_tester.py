@@ -7,6 +7,7 @@ import copy
 import sys
 
 sys.path.append('../../')
+sys.path.append('.')
 
 from spotmicro.GymEnvs.spot_bezier_env import spotBezierEnv
 from spotmicro.util.gui import GUI
@@ -32,7 +33,7 @@ parser.add_argument("-hf",
 parser.add_argument("-r",
                     "--DebugRack",
                     help="Put Spot on an Elevated Rack",
-                    action='store_true')
+                    a1tion='store_true')
 parser.add_argument("-p",
                     "--DebugPath",
                     help="Draw Spot's Foot Path",

@@ -5,6 +5,7 @@ import numpy as np
 import sys
 
 sys.path.append('../../')
+sys.path.append('.')
 
 from ars_lib.ars import ARSAgent, Normalizer, Policy
 from spotmicro.util.gui import GUI
