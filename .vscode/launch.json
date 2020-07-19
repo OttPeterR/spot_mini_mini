@@ -10,6 +10,20 @@
             "request": "launch",
             "program": "./spot_bullet/src/env_tester.py",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Train",
+            "type": "python",
+            "request": "launch",
+            "program": "./spot_bullet/src/spot_ars.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Evaluate",
+            "type": "python",
+            "request": "launch",
+            "program": "./spot_bullet/src/spot_ars_eval.py",
+            "console": "integratedTerminal"
         }
     ]
 }
