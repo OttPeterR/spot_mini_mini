@@ -46,7 +46,7 @@ actions_to_filter = 2
 
 
 class SpotCommander():
-    def __init__(self, Agent=True):
+    def __init__(self, Agent=False):
 
         rospy.init_node('Policies', anonymous=True)
         # self.movetypes = [
@@ -196,10 +196,10 @@ class SpotCommander():
         """ Turn joystick inputs into commands
         """
 
-        # x_offset = -0.012
-        # z_offset = -0.01
-        x_offset = 0.0
-        z_offset = 0.0
+        x_offset = -0.012
+        z_offset = -0.01
+        # x_offset = 0.0
+        # z_offset = 0.0
 
         if self.mini_cmd.motion != "Stop":
             self.StepVelocity = np.clip(
