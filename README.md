@@ -108,6 +108,14 @@ Yaw logic based on [4-wheel steering car](http://www.inase.org/library/2014/sant
 * Scipy
 * Numpy
 
+#### Install
+Create a python virtual environment: `python3.8 -m venv venv`.\
+Activate it `source venv/bin/activate`\
+Install requirements `pip install -r requirements.txt`
+
+#### Test out a simulation
+Run `python spot_bullet/src/env_tester.py` and a gui should show up with a bunch of sliders.
+
 ### Joystick Control with ROS
 First, you're going to need a joystick (okay, not really, but it's more fun if you have one).
 
