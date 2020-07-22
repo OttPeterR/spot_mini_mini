@@ -9,7 +9,10 @@
             "type": "python",
             "request": "launch",
             "program": "./spot_bullet/src/env_tester.py",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "args": [
+                "-ar"
+            ]
         },
         {
             "name": "Train",
