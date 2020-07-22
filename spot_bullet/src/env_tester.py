@@ -6,8 +6,8 @@ import copy
 
 import sys
 
-sys.path.append('../../')
-sys.path.append('.')
+sys.path.append("../../")
+sys.path.append(".")
 
 from spotmicro.GymEnvs.spot_bezier_env import spotBezierEnv
 from spotmicro.util.gui import GUI
@@ -26,26 +26,22 @@ import argparse
 # ARGUMENTS
 descr = "Spot Mini Mini Environment Tester (No Joystick)."
 parser = argparse.ArgumentParser(description=descr)
-parser.add_argument("-hf",
-                    "--HeightField",
-                    help="Use HeightField",
-                    action='store_true')
-parser.add_argument("-r",
-                    "--DebugRack",
-                    help="Put Spot on an Elevated Rack",
-                    a1tion='store_true')
-parser.add_argument("-p",
-                    "--DebugPath",
-                    help="Draw Spot's Foot Path",
-                    action='store_true')
-parser.add_argument("-ay",
-                    "--AutoYaw",
-                    help="Automatically Adjust Spot's Yaw",
-                    action='store_true')
-parser.add_argument("-ar",
-                    "--AutoReset",
-                    help="Automatically Reset Environment When Spot Falls",
-                    action='store_true')
+parser.add_argument("-hf", "--HeightField", help="Use HeightField", action="store_true")
+parser.add_argument(
+    "-r", "--DebugRack", help="Put Spot on an Elevated Rack", action="store_true"
+)
+parser.add_argument(
+    "-p", "--DebugPath", help="Draw Spot's Foot Path", action="store_true"
+)
+parser.add_argument(
+    "-ay", "--AutoYaw", help="Automatically Adjust Spot's Yaw", action="store_true"
+)
+parser.add_argument(
+    "-ar",
+    "--AutoReset",
+    help="Automatically Reset Environment When Spot Falls",
+    action="store_true",
+)
 ARGS = parser.parse_args()
 
 
@@ -82,10 +78,12 @@ def main():
     else:
         height_field = False
 
-    env = spotBezierEnv(render=True,
-                        on_rack=on_rack,
-                        height_field=height_field,
-                        draw_foot_path=draw_foot_path)
+    env = spotBezierEnv(
+        render=True,
+        on_rack=on_rack,
+        height_field=height_field,
+        draw_foot_path=draw_foot_path,
+    )
 
     # Set seeds
     env.seed(seed)
@@ -132,11 +130,27 @@ def main():
 
         bz_step.ramp_up()
 
-        pos, orn, StepLength, LateralFraction, YawRate, StepVelocity, ClearanceHeight, PenetrationDepth = bz_step.StateMachine(
-        )
+        (
+            pos,
+            orn,
+            StepLength,
+            LateralFraction,
+            YawRate,
+            StepVelocity,
+            ClearanceHeight,
+            PenetrationDepth,
+        ) = bz_step.StateMachine()
 
-        pos, orn, StepLength, LateralFraction, YawRate, StepVelocity, ClearanceHeight, PenetrationDepth = g_u_i.UserInput(
-        )
+        (
+            pos,
+            orn,
+            StepLength,
+            LateralFraction,
+            YawRate,
+            StepVelocity,
+            ClearanceHeight,
+            PenetrationDepth,
+        ) = g_u_i.UserInput()
 
         yaw = env.return_yaw()
 
@@ -161,10 +175,17 @@ def main():
         BR_phases.append(env.spot.LegPhases[3])
 
         # Get Desired Foot Poses
-        T_bf = bzg.GenerateTrajectory(StepLength, LateralFraction, YawRate,
-                                      StepVelocity, T_bf0, T_bf,
-                                      ClearanceHeight, PenetrationDepth,
-                                      contacts)
+        T_bf = bzg.GenerateTrajectory(
+            StepLength,
+            LateralFraction,
+            YawRate,
+            StepVelocity,
+            T_bf0,
+            T_bf,
+            ClearanceHeight,
+            PenetrationDepth,
+            contacts,
+        )
         joint_angles = spot.IK(orn, pos, T_bf)
 
         # for i, (key, Tbf_in) in enumerate(T_bf.items()):
@@ -197,5 +218,5 @@ def main():
     print(joint_angles)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
